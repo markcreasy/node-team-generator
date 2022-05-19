@@ -5,11 +5,16 @@ test('creates an Manager object', () => {
 
   expect(manager.name).toBe('Manager');
   expect(manager.id).toBe(1);
-  expect(manager.email).toBe('Manager@fakemail.com');
   expect(manager.officeNumber).toBe(1);
 });
 
-test('creates an Manager object', () => {
+test('Gets Manager\'s Email', () => {
+  const engineer = new Manager('Manager', 1 , 1);
+
+  expect(engineer.getEmail()).toBe('Manager@fakemail.com');
+});
+
+test('Gets Manager\'s Role', () => {
   const manager = new Manager('Manager', 1, 1);
 
   expect(manager.getRole()).toBe("Manager");

@@ -5,8 +5,12 @@ test('creates an Employee object', () => {
 
   expect(employee.name).toBe('Employee');
   expect(employee.id).toBe(1);
-  expect(employee.email).toBe('Employee@fakemail.com');
-  expect(employee.getRole()).toBe('Employee');
+});
+
+test('Gets Employee\'s Email', () => {
+  const engineer = new Employee('Employee', 1 );
+
+  expect(engineer.getEmail()).toBe('Employee@fakemail.com');
 });
 
 test('gets Employee\'s role', () => {
