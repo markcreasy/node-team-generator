@@ -1,0 +1,23 @@
+{
+  "name": "team-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markcreasy/node-team-generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markcreasy/node-team-generator/issues"
+  },
+  "homepage": "https://github.com/markcreasy/node-team-generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.0"
+  }
+}
