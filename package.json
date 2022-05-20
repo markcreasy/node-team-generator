@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/markcreasy/node-team-generator#readme",
   "dependencies": {
+    "bootstrap-icons": "^1.8.2",
     "inquirer": "^8.2.4",
     "jest": "^28.1.0"
   }

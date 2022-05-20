@@ -1,10 +1,12 @@
 const inquirer = require('inquirer');
 const {managerPrompts, engineerPrompts, internPrompts} = require('./utils/prompts.js');
+const generateHTML = require('./utils/page-template.js');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
 const Engineer = require('./lib/Engineer');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 
-let manager;
+let employees = [];
 
 function getEmployeeInfo(role = "employee"){
 
@@ -32,41 +34,58 @@ function getEmployeeInfo(role = "employee"){
 }
 
 function launchTeamGenerator(){
-  getEmployeeInfo('Manager')
+  return getEmployeeInfo('Manager')
     .then(({ name, id, email, officeNumber }) => {
-      manager = new Manager(name, id, email, officeNumber);
-
-      nextSteps();
+      employees.push(new Manager(name, id, email, officeNumber));
     })
 }
 
 function nextSteps(){
-  inquirer.prompt({
+  return inquirer.prompt({
+
     type: 'list',
     name: 'selection',
     message: `What would you like to do next?`,
     choices: ['Add an Engineer', 'Add an Intern', new inquirer.Separator(),"I'm done building my team. Generate HTML"],
+
   }).then(({selection}) => {
     switch (selection) {
+
       case "Add an Engineer":
-        getEmployeeInfo('Engineer').then((results) => {
-          console.log(results);
-          nextSteps();
+        return getEmployeeInfo('Engineer').then(({name, id, email, gitHubUserName}) => {
+          employees.push(new Engineer(name, id, email, gitHubUserName));
+          return nextSteps();
         });
         break;
+
       case "Add an Intern":
-        getEmployeeInfo('Intern').then((results) => {
-          console.log(results);
-          nextSteps();
+        return getEmployeeInfo('Intern').then(({name, id, email, school}) => {
+          employees.push(new Intern(name, id, email, school));
+          return nextSteps();
         });
         break;
+
       default:
-        // generate HMTL
+        // user ended team builder
         return;
     }
+
   });
 }
 
-// Display welcom message
-console.log("Welcome to the Node-Team-Generator! Let's build your team site...");
-launchTeamGenerator();
+// Display welcome message
+console.log("Welcome to the Node-Team-Generator!");
+console.log("Let's build your team site...");
+launchTeamGenerator()
+  .then(nextSteps)
+  .then(() => generateHTML(employees))
+
+  .then(pageHTML => {
+    return writeFile(pageHTML);
+  })
+  .then(copyFileResponse => {
+    console.log(copyFileResponse);
+  })
+  .catch(err => {
+    console.log(err);
+  });;
