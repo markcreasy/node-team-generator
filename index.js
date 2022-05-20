@@ -83,9 +83,9 @@ launchTeamGenerator()
   .then(pageHTML => {
     return writeFile(pageHTML);
   })
-  .then(copyFileResponse => {
-    console.log(copyFileResponse);
-  })
+  // .then(copyFileResponse => {
+  //   console.log(copyFileResponse);
+  // })
   .catch(err => {
     console.log(err);
   });;
